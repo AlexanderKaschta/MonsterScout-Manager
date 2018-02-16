@@ -19,13 +19,14 @@ public class SplashActivity extends AppCompatActivity {
 
         boolean isFirstStart = sharedPref.getBoolean("FIRST_START", true);
         if(isFirstStart){
-            //startActivity(new Intent(this, PreSetupActivity.class));
+            startActivity(new Intent(this, SetupActivity.class));
             finish();
         }
         else {
             //startActivity(new Intent(this, MainActivity.class));
             finish();
         }
+
 
     }
 }
