@@ -21,7 +21,7 @@
             android:id="@+id/input_username"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:hint="Username"
+            android:hint="Name"
             android:maxLines="1"
             android:singleLine="true" />
 
@@ -45,6 +45,7 @@
             android:layout_height="wrap_content"
             android:hint="Teamnumber"
             android:maxLines="1"
+            android:inputType="numberSigned"
             android:singleLine="true" />
 
     </android.support.design.widget.TextInputLayout>
