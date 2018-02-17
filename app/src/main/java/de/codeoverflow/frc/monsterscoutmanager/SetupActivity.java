@@ -62,9 +62,7 @@ public class SetupActivity extends AppCompatActivity {
                 else {
                     Toast.makeText(getApplicationContext(), "Please correct the errors!", Toast.LENGTH_SHORT).show();
 
-
                 }
-
 
             }
         });
