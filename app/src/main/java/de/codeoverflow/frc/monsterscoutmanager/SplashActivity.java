@@ -20,6 +20,7 @@ public class SplashActivity extends AppCompatActivity {
             finish();
         }
         else {
+            //TODO Create activity
             //startActivity(new Intent(this, MainActivity.class));
             finish();
         }
