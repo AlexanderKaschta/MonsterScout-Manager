@@ -1,3 +1,5 @@
 <resources>
     <string name="app_name">MonsterScout Manager</string>
+    <string name="events">Events</string>
+    <string name="action_settings">Settings</string>
 </resources>
