@@ -1,0 +1,2 @@
+# MonsterScout-Manager
+Scouting app
