@@ -11,9 +11,6 @@ public class SplashActivity extends AppCompatActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        //setContentView(R.layout.activity_splash);
-
-        //Check if all variables are given
 
         SharedPreferences sharedPref = PreferenceManager.getDefaultSharedPreferences(this);
 
