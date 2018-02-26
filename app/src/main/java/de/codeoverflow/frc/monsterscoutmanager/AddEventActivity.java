@@ -85,23 +85,4 @@ public class AddEventActivity extends AppCompatActivity {
 
     }
 
-    @Override
-    public boolean onCreateOptionsMenu(Menu menu) {
-        MenuInflater inflater = getMenuInflater();
-        inflater.inflate(R.menu.menu_add_event, menu);
-        return true;
-    }
-
-    @Override
-    public boolean onOptionsItemSelected(MenuItem item) {
-        switch (item.getItemId()) {
-            case R.id.action_add:
-
-                //Finish this task
-
-                return true;
-            default:
-                return super.onOptionsItemSelected(item);
-        }
-    }
 }
