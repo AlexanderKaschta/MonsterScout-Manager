@@ -1,8 +1,16 @@
 package de.codeoverflow.frc.monsterscoutmanager.storage.models;
 
+import android.arch.persistence.room.ColumnInfo;
+import android.arch.persistence.room.Entity;
+import android.arch.persistence.room.PrimaryKey;
+import android.arch.persistence.room.TypeConverters;
+import android.support.annotation.NonNull;
+
 import com.google.gson.annotations.SerializedName;
 
 import java.util.Date;
+
+import de.codeoverflow.frc.monsterscoutmanager.storage.database.convertor.DateConvertor;
 
 /**
  * @author Alex
@@ -10,23 +18,41 @@ import java.util.Date;
  * Created by Alex on 17.02.2018.
  */
 
+@Entity(tableName = "simple_events")
 public class SimpleEvent {
 
     @SerializedName("key")
+    @PrimaryKey
+    @NonNull
     private String key;
+
     @SerializedName("event_code")
+    @ColumnInfo(name = "event_code")
     private String eventCode;
+
     @SerializedName("name")
+    @ColumnInfo(name = "name")
     private String name;
+
     @SerializedName("year")
+    @ColumnInfo(name = "year")
     private int year;
+
     @SerializedName("timezone")
+    @ColumnInfo(name = "timezone")
     private String timezone;
+
     @SerializedName("city")
+    @ColumnInfo(name = "city")
     private String city;
+
     @SerializedName("country")
+    @ColumnInfo(name = "country")
     private String country;
+
     @SerializedName("start_date")
+    @ColumnInfo(name = "start_date")
+    @TypeConverters({DateConvertor.class})
     private Date startDate;
 
     public SimpleEvent(String key, String eventCode, String name, int year, String timezone, String city, String country, Date startDate) {

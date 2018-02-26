@@ -1,5 +1,6 @@
 package de.codeoverflow.frc.monsterscoutmanager;
 
+import android.arch.persistence.room.Room;
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.design.widget.FloatingActionButton;
@@ -10,6 +11,7 @@ import android.support.v7.widget.Toolbar;
 import android.view.View;
 import android.widget.RelativeLayout;
 
+import de.codeoverflow.frc.monsterscoutmanager.storage.database.AppDatabase;
 import de.codeoverflow.frc.monsterscoutmanager.util.Connectivity;
 
 public class MainActivity extends AppCompatActivity {
@@ -32,7 +34,11 @@ public class MainActivity extends AppCompatActivity {
         }
 
         //Read out of the database and add those items to the recyclerview
+        AppDatabase db = Room.databaseBuilder(getApplicationContext(), AppDatabase.class, "production")
+                .allowMainThreadQueries()
+                .build();
 
+        final int size = db.getSimpleEventDao().getAll().size();
 
         FloatingActionButton fab = findViewById(R.id.fab);
         fab.setOnClickListener(new View.OnClickListener() {
@@ -40,7 +46,7 @@ public class MainActivity extends AppCompatActivity {
             public void onClick(View view) {
 
                 //If there is a connection, load data from myTBA
-                if (Connectivity.isConnected(getApplicationContext())){
+                if (Connectivity.isConnected(getApplicationContext()) || size > 0){
                     startActivity(new Intent(getApplicationContext(), AddEventActivity.class));
                 }
                 else {
