@@ -9,7 +9,11 @@ import android.support.v7.widget.Toolbar;
 import android.view.Menu;
 import android.view.MenuInflater;
 import android.view.MenuItem;
+import android.view.View;
+import android.widget.ProgressBar;
 import android.widget.Toast;
+
+import com.simplecityapps.recyclerview_fastscroll.views.FastScrollRecyclerView;
 
 import java.util.Collections;
 import java.util.Comparator;
@@ -33,8 +37,10 @@ public class AddEventActivity extends AppCompatActivity {
         setSupportActionBar(toolbar);
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
 
+        final ProgressBar bar = findViewById(R.id.progressBar);
+
         //final FastScrollRecyclerView recyclerView = findViewById(R.id.recycler);
-        final com.simplecityapps.recyclerview_fastscroll.views.FastScrollRecyclerView recyclerView = findViewById(R.id.recycler);
+        final FastScrollRecyclerView recyclerView = findViewById(R.id.recycler);
         recyclerView.setLayoutManager(new LinearLayoutManager(this));
 
         TBAApi api = API.getInstance();
@@ -55,6 +61,9 @@ public class AddEventActivity extends AppCompatActivity {
                 });
 
                 recyclerView.setAdapter(new SimpleEventAdapter(events));
+
+                bar.setVisibility(View.GONE);
+                recyclerView.setVisibility(View.VISIBLE);
 
                 for (SimpleEvent e : response.body()){
                     System.out.println(e.getName());

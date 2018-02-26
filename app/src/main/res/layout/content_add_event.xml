@@ -10,7 +10,18 @@
     tools:showIn="@layout/activity_add_event">
 
 
+    <ProgressBar
+        android:id="@+id/progressBar"
+        style="?android:attr/progressBarStyle"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        app:layout_constraintBottom_toBottomOf="@+id/recycler"
+        app:layout_constraintEnd_toEndOf="@+id/recycler"
+        app:layout_constraintStart_toStartOf="@+id/recycler"
+        app:layout_constraintTop_toTopOf="@+id/recycler" />
+
     <com.simplecityapps.recyclerview_fastscroll.views.FastScrollRecyclerView
+        android:visibility="gone"
         android:id="@+id/recycler"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
@@ -21,6 +32,12 @@
         app:fastScrollPopupPosition="adjacent"
         app:fastScrollPopupTextColor="@android:color/primary_text_dark"
         app:fastScrollPopupTextSize="56sp"
-        app:fastScrollThumbColor="@color/colorAccent" />
+        app:fastScrollThumbColor="@color/colorAccent"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent">
+
+    </com.simplecityapps.recyclerview_fastscroll.views.FastScrollRecyclerView>
 
 </android.support.constraint.ConstraintLayout>
