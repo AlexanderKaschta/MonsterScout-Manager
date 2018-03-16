@@ -8,6 +8,7 @@ import android.support.design.widget.Snackbar;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.Toolbar;
+import android.util.Log;
 import android.view.View;
 import android.widget.RelativeLayout;
 
@@ -29,21 +30,26 @@ public class MainActivity extends AppCompatActivity {
 
         layout = findViewById(R.id.container_empty);
 
+
+
         if (isEmpty) {
             layout.setVisibility(View.VISIBLE);
         }
 
-        //Read out of the database and add those items to the recyclerview
-        AppDatabase db = Room.databaseBuilder(getApplicationContext(), AppDatabase.class, "production")
-                .allowMainThreadQueries()
-                .build();
-
-        final int size = db.getSimpleEventDao().getAll().size();
 
         FloatingActionButton fab = findViewById(R.id.fab);
         fab.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
+
+                //Read out of the database and add those items to the recyclerview
+                AppDatabase db = Room.databaseBuilder(getApplicationContext(), AppDatabase.class, "production")
+                        .allowMainThreadQueries()
+                        .build();
+
+                int size = db.getSimpleEventDao().getAll().size();
+
+                Log.d("Database", "Amount of elements: " + String.valueOf(size));
 
                 //If there is a connection, load data from myTBA
                 if (Connectivity.isConnected(getApplicationContext()) || size > 0){

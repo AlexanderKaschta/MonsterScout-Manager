@@ -22,11 +22,14 @@ import de.codeoverflow.frc.monsterscoutmanager.networking.TBAApi;
 import de.codeoverflow.frc.monsterscoutmanager.storage.adapter.SimpleEventAdapter;
 import de.codeoverflow.frc.monsterscoutmanager.storage.database.AppDatabase;
 import de.codeoverflow.frc.monsterscoutmanager.storage.models.SimpleEvent;
+import de.codeoverflow.frc.monsterscoutmanager.util.ui.OnRecyclerViewItemClickListener;
 import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
 
 public class AddEventActivity extends AppCompatActivity {
+
+    private List<SimpleEvent> events;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -48,14 +51,14 @@ public class AddEventActivity extends AppCompatActivity {
                 .allowMainThreadQueries()
                 .build();
 
-        List<SimpleEvent> events = db.getSimpleEventDao().getAll();
+        events = db.getSimpleEventDao().getAll();
 
         if (events.size() == 0) {
             listCall.enqueue(new Callback<List<SimpleEvent>>() {
                 @Override
                 public void onResponse(Call<List<SimpleEvent>> call, Response<List<SimpleEvent>> response) {
 
-                    List<SimpleEvent> events = response.body();
+                    events = response.body();
 
                     Collections.sort(events, new Comparator<SimpleEvent>() {
                         @Override
@@ -64,7 +67,16 @@ public class AddEventActivity extends AppCompatActivity {
                         }
                     });
 
-                    recyclerView.setAdapter(new SimpleEventAdapter(events));
+                    SimpleEventAdapter adapter = new SimpleEventAdapter(events, new OnRecyclerViewItemClickListener() {
+                        @Override
+                        public void onRecyclerViewItemClicked(int position) {
+                            Toast.makeText(getApplicationContext(), "Item clicked: " + position, Toast.LENGTH_SHORT).show();
+                            addEvent(position);
+                        }
+                    });
+
+
+                    recyclerView.setAdapter(adapter);
 
                     bar.setVisibility(View.GONE);
                     recyclerView.setVisibility(View.VISIBLE);
@@ -86,7 +98,13 @@ public class AddEventActivity extends AppCompatActivity {
 
         } else {
 
-            recyclerView.setAdapter(new SimpleEventAdapter(events));
+            recyclerView.setAdapter(new SimpleEventAdapter(events, new OnRecyclerViewItemClickListener() {
+                @Override
+                public void onRecyclerViewItemClicked(int position) {
+                    Toast.makeText(getApplicationContext(), "Item clicked: " + position, Toast.LENGTH_SHORT).show();
+                    addEvent(position);
+                }
+            }));
             bar.setVisibility(View.GONE);
             recyclerView.setVisibility(View.VISIBLE);
         }
@@ -94,6 +112,23 @@ public class AddEventActivity extends AppCompatActivity {
         DividerItemDecoration itemDecoration = new DividerItemDecoration(this, DividerItemDecoration.VERTICAL);
         itemDecoration.setDrawable(getResources().getDrawable(R.drawable.list_divider));
         recyclerView.addItemDecoration(itemDecoration);
+
+    }
+
+
+    private void addEvent(int index){
+
+        //If there are some events ...
+        if (events.size() != 0){
+
+            SimpleEvent event = events.get(index);
+            System.out.println("Item clicked: " + event.getName());
+
+
+            //Check, if there is already an item in the database
+
+        }
+
 
     }
 
