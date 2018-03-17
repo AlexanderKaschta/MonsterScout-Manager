@@ -1,5 +1,6 @@
 package de.codeoverflow.frc.monsterscoutmanager.storage.models;
 
+import android.arch.persistence.room.ColumnInfo;
 import android.arch.persistence.room.Entity;
 import android.arch.persistence.room.PrimaryKey;
 
@@ -16,6 +17,7 @@ public class Team {
 
     @PrimaryKey
     @SerializedName("team_number")
+    @ColumnInfo(name = "teamNumber")
     private int teamnumber;
 
     @SerializedName("nickname")

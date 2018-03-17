@@ -1,9 +1,8 @@
-package de.codeoverflow.frc.monsterscoutmanager;
+package de.codeoverflow.frc.monsterscoutmanager.activities;
 
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.preference.PreferenceManager;
-import android.support.design.widget.Snackbar;
 import android.support.design.widget.TextInputLayout;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
@@ -12,6 +11,7 @@ import android.widget.Button;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import de.codeoverflow.frc.monsterscoutmanager.R;
 import de.codeoverflow.frc.monsterscoutmanager.util.text.GeneralTextWatcher;
 import de.codeoverflow.frc.monsterscoutmanager.util.text.TeamTextWatcher;
 

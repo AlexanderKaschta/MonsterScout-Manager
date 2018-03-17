@@ -1,4 +1,4 @@
-package de.codeoverflow.frc.monsterscoutmanager;
+package de.codeoverflow.frc.monsterscoutmanager.activities;
 
 import android.content.Intent;
 import android.content.SharedPreferences;

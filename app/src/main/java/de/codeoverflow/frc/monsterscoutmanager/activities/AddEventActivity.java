@@ -1,4 +1,4 @@
-package de.codeoverflow.frc.monsterscoutmanager;
+package de.codeoverflow.frc.monsterscoutmanager.activities;
 
 import android.arch.persistence.room.Room;
 import android.content.Intent;
@@ -17,10 +17,12 @@ import java.util.Collections;
 import java.util.Comparator;
 import java.util.List;
 
+import de.codeoverflow.frc.monsterscoutmanager.R;
 import de.codeoverflow.frc.monsterscoutmanager.networking.API;
 import de.codeoverflow.frc.monsterscoutmanager.networking.TBAApi;
 import de.codeoverflow.frc.monsterscoutmanager.storage.adapter.SimpleEventAdapter;
 import de.codeoverflow.frc.monsterscoutmanager.storage.database.AppDatabase;
+import de.codeoverflow.frc.monsterscoutmanager.storage.models.Event;
 import de.codeoverflow.frc.monsterscoutmanager.storage.models.SimpleEvent;
 import de.codeoverflow.frc.monsterscoutmanager.util.ui.OnRecyclerViewItemClickListener;
 import retrofit2.Call;
@@ -30,6 +32,7 @@ import retrofit2.Response;
 public class AddEventActivity extends AppCompatActivity {
 
     private List<SimpleEvent> events;
+    private AppDatabase db;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -47,7 +50,7 @@ public class AddEventActivity extends AppCompatActivity {
 
         Call<List<SimpleEvent>> listCall = api.getSimpleEvents(2018);
 
-        final AppDatabase db = Room.databaseBuilder(getApplicationContext(), AppDatabase.class, "production")
+        db = Room.databaseBuilder(getApplicationContext(), AppDatabase.class, "production")
                 .allowMainThreadQueries()
                 .build();
 
@@ -121,11 +124,20 @@ public class AddEventActivity extends AppCompatActivity {
         //If there are some events ...
         if (events.size() != 0){
 
-            SimpleEvent event = events.get(index);
-            System.out.println("Item clicked: " + event.getName());
-
+            SimpleEvent simpleEvent = events.get(index);
+            System.out.println("Item clicked: " + simpleEvent.getName());
 
             //Check, if there is already an item in the database
+
+            Event event = new Event(simpleEvent.getKey(), simpleEvent.getEventCode()
+                    , simpleEvent.getName(), simpleEvent.getYear(), simpleEvent.getTimezone()
+                    , simpleEvent.getCity(), simpleEvent.getCountry(), simpleEvent.getStartDate(), false);
+
+            db.getEventDao().insert(event);
+            startActivity(new Intent(getApplicationContext(), MainActivity.class));
+            finish();
+
+
 
         }
 

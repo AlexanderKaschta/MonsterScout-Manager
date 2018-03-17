@@ -15,11 +15,12 @@ import de.codeoverflow.frc.monsterscoutmanager.storage.database.convertor.DateCo
  * Created by Alex on 16.03.2018.
  */
 
-@Entity
+@Entity(tableName = "events")
 public class Event {
 
     @PrimaryKey
     @NonNull
+    @ColumnInfo(name = "event_key")
     private String key;
 
     @ColumnInfo(name = "event_code")
