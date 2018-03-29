@@ -76,6 +76,8 @@ public class MainActivity extends AppCompatActivity {
                 @Override
                 public void onRecyclerViewItemClicked(int position) {
                     Toast.makeText(getApplicationContext(), "It's ready to go", Toast.LENGTH_SHORT).show();
+                    //
+                    startActivity(new Intent(getApplicationContext(), OverviewActivity.class));
                 }
             });
 
