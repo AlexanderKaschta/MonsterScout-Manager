@@ -1,8 +1,11 @@
 package de.codeoverflow.frc.monsterscoutmanager.activities;
 
+import android.content.SharedPreferences;
 import android.os.Bundle;
+import android.preference.PreferenceManager;
 import android.support.design.widget.FloatingActionButton;
 import android.support.design.widget.Snackbar;
+import android.util.Log;
 import android.view.View;
 import android.support.design.widget.NavigationView;
 import android.support.v4.view.GravityCompat;
@@ -12,16 +15,26 @@ import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
 import android.view.Menu;
 import android.view.MenuItem;
+import android.widget.TextView;
+
+import org.w3c.dom.Text;
 
 import de.codeoverflow.frc.monsterscoutmanager.R;
 
 public class OverviewActivity extends AppCompatActivity
         implements NavigationView.OnNavigationItemSelectedListener {
 
+    private TextView userTeam;
+
+    private SharedPreferences preferences;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_overview);
+
+        preferences = PreferenceManager.getDefaultSharedPreferences(this);
+
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
 
@@ -42,6 +55,19 @@ public class OverviewActivity extends AppCompatActivity
 
         NavigationView navigationView = (NavigationView) findViewById(R.id.nav_view);
         navigationView.setNavigationItemSelectedListener(this);
+
+        View navigation_header = navigationView.getHeaderView(0);
+        TextView user = navigation_header.findViewById(R.id.textView_userName);
+        TextView team = navigation_header.findViewById(R.id.textView_userTeam);
+
+        String name = preferences.getString("USER_NAME", "User");
+        int teamNumber = preferences.getInt("USER_TEAM_PARTICIPATING", 0);
+
+        String displayNumber = "#" + String.valueOf(teamNumber);
+
+        user.setText(name);
+        team.setText(displayNumber);
+
     }
 
     @Override

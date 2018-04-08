@@ -3,7 +3,7 @@
     <string name="events">Events</string>
     <string name="action_add">Apply</string>
     <string name="title_activity_add_event">Add</string>
-    <string name="title_activity_overview">OverviewActivity</string>
+    <string name="title_activity_overview">Overview</string>
 
     <string name="navigation_drawer_open">Open navigation drawer</string>
     <string name="navigation_drawer_close">Close navigation drawer</string>

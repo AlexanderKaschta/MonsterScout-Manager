@@ -50,9 +50,6 @@ public class MainActivity extends AppCompatActivity {
                 .build();
 
 
-
-
-
         final List<Event> events = db.getEventDao().getAll();
 
         Collections.sort(events, new Comparator<Event>() {
