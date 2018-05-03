@@ -24,6 +24,8 @@ import de.codeoverflow.frc.monsterscoutmanager.storage.adapter.SimpleEventAdapte
 import de.codeoverflow.frc.monsterscoutmanager.storage.database.AppDatabase;
 import de.codeoverflow.frc.monsterscoutmanager.storage.models.Event;
 import de.codeoverflow.frc.monsterscoutmanager.storage.models.SimpleEvent;
+import de.codeoverflow.frc.monsterscoutmanager.storage.models.Team;
+import de.codeoverflow.frc.monsterscoutmanager.storage.models.TeamAtEvent;
 import de.codeoverflow.frc.monsterscoutmanager.util.ui.OnRecyclerViewItemClickListener;
 import retrofit2.Call;
 import retrofit2.Callback;
@@ -32,7 +34,11 @@ import retrofit2.Response;
 public class AddEventActivity extends AppCompatActivity {
 
     private List<SimpleEvent> events;
+    private List<Team> teams;
     private AppDatabase db;
+    private TBAApi api;
+    private ProgressBar bar;
+    private FastScrollRecyclerView recyclerView;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -42,11 +48,11 @@ public class AddEventActivity extends AppCompatActivity {
         setSupportActionBar(toolbar);
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
 
-        final ProgressBar bar = findViewById(R.id.progressBar);
-        final FastScrollRecyclerView recyclerView = findViewById(R.id.recycler);
+        bar = findViewById(R.id.progressBar);
+        recyclerView = findViewById(R.id.recycler);
         recyclerView.setLayoutManager(new LinearLayoutManager(this));
 
-        TBAApi api = API.getInstance();
+        api = API.getInstance();
 
         Call<List<SimpleEvent>> listCall = api.getSimpleEvents(2018);
 
@@ -124,7 +130,10 @@ public class AddEventActivity extends AppCompatActivity {
         //If there are some events ...
         if (events.size() != 0){
 
-            SimpleEvent simpleEvent = events.get(index);
+            recyclerView.setVisibility(View.GONE);
+            bar.setVisibility(View.VISIBLE);
+
+            final SimpleEvent simpleEvent = events.get(index);
             System.out.println("Item clicked: " + simpleEvent.getName());
 
             //Check, if there is already an item in the database
@@ -133,14 +142,42 @@ public class AddEventActivity extends AppCompatActivity {
                     , simpleEvent.getName(), simpleEvent.getYear(), simpleEvent.getTimezone()
                     , simpleEvent.getCity(), simpleEvent.getCountry(), simpleEvent.getStartDate(), false);
 
+
+            Call<List<Team>> teamCall = api.getTeamsOfEvent(simpleEvent.getKey());
+
+            teamCall.enqueue(new Callback<List<Team>>() {
+                @Override
+                public void onResponse(Call<List<Team>> call, Response<List<Team>> response) {
+                    teams = response.body();
+
+                    if (response.body() != null){
+
+                        for (Team e : teams) {
+                            db.getTeamDao().insert(e);
+                            db.getTeamAtEventDao().insert(new TeamAtEvent(0, e.getTeamnumber(), simpleEvent.getKey()));
+                            System.out.println(e.getName());
+                        }
+                        startActivity(new Intent(getApplicationContext(), MainActivity.class));
+                        finish();
+                    }else {
+                        Toast.makeText(getApplicationContext(), "Couldn't load teams", Toast.LENGTH_SHORT).show();
+                        startActivity(new Intent(getApplicationContext(), MainActivity.class));
+                        finish();
+                    }
+
+                }
+
+                @Override
+                public void onFailure(Call<List<Team>> call, Throwable t) {
+                    Toast.makeText(getApplicationContext(), "Couldn't load teams", Toast.LENGTH_SHORT).show();
+                    startActivity(new Intent(getApplicationContext(), MainActivity.class));
+                    finish();
+                }
+            });
+
             db.getEventDao().insert(event);
-            startActivity(new Intent(getApplicationContext(), MainActivity.class));
-            finish();
-
-
 
         }
-
 
     }
 
