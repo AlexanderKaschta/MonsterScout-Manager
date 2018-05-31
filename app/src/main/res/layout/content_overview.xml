@@ -8,4 +8,9 @@
     tools:context="de.codeoverflow.frc.monsterscoutmanager.activities.OverviewActivity"
     tools:showIn="@layout/app_bar_overview">
 
+    <FrameLayout
+        android:id="@+id/frame_main"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"/>
+
 </android.support.constraint.ConstraintLayout>

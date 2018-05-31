@@ -18,22 +18,19 @@
             android:background="@color/colorPrimary"
             app:popupTheme="@style/AppTheme.PopupOverlay" />
 
-        <android.support.design.widget.TabLayout
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            app:tabMode="scrollable"
-            app:tabGravity="fill"/>
-
     </android.support.design.widget.AppBarLayout>
 
     <include layout="@layout/content_overview" />
 
-    <android.support.design.widget.FloatingActionButton
-        android:id="@+id/fab"
-        android:layout_width="wrap_content"
+    <android.support.design.widget.BottomNavigationView
+        android:id="@+id/bottom_navigation"
+        android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_gravity="bottom|end"
-        android:layout_margin="@dimen/fab_margin"
-        app:srcCompat="@android:drawable/ic_dialog_email" />
+        android:layout_alignParentBottom="true"
+        android:layout_gravity="bottom"
+        app:itemBackground="@color/white"
+        app:itemIconTint="@color/icon_bottom_nar"
+        app:itemTextColor="@color/icon_bottom_nar"
+        app:menu="@menu/bottom_navigation_main" />
 
 </android.support.design.widget.CoordinatorLayout>
